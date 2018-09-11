@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="examples"/>
+	<classpathentry kind="src" path="My_Codes"/>
+	<classpathentry kind="src" path="sources"/>
+	<classpathentry kind="lib" path="jars/cloudsim-3.0.3-sources.jar"/>
+	<classpathentry kind="lib" path="jars/cloudsim-3.0.3.jar"/>
+	<classpathentry kind="lib" path="jars/cloudsim-examples-3.0.3-sources.jar"/>
+	<classpathentry kind="lib" path="jars/cloudsim-examples-3.0.3.jar"/>
+	<classpathentry kind="lib" path="/home/guilherme/Desktop/TCC/Cloud_Sim_TCC/cloudsim-3.0.3/jars/commons-math3-3.6.1.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Juzzy_TCC"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
