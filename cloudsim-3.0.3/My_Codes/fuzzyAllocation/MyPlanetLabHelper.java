@@ -46,6 +46,7 @@ public class MyPlanetLabHelper {
 		File inputFolder = new File(inputFolderName);
 		File[] files = inputFolder.listFiles();
 
+		System.out.println("qtde de arquivos: " + files.length);
 		for (int i = 0; i < files.length; i++) {
 			Cloudlet cloudlet = null;
 			try {

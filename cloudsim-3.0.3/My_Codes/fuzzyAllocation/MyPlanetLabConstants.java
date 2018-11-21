@@ -14,6 +14,6 @@ package fuzzyAllocation;
  */
 public class MyPlanetLabConstants {
 
-	public final static int NUMBER_OF_HOSTS = 800;
+	public final static int NUMBER_OF_HOSTS = 20;
 
 }

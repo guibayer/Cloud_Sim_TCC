@@ -7,7 +7,7 @@ public class MyRunner {
 	public static void main(String[] args) throws IOException {
 		boolean enableOutput = true;
 		boolean outputToFile = true;
-		String inputFolder = MyNonPowerAware.class.getClassLoader().getResource("myworkload/planetlab").getPath();
+		String inputFolder = MyNonPowerAware.class.getClassLoader().getResource("workload/planetlab").getPath();
 		String outputFolder = "output1007";
 		String workload = "My20110303"; // PlanetLab workload
 		String vmAllocationPolicy = "thr"; // Static Threshold (THR) VM allocation policy
