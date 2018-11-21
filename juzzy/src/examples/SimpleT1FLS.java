@@ -77,21 +77,21 @@ public class SimpleT1FLS
         double[] parametrosHighPriority=  {5.5, 9.6, 10, 10};
         T1MF_Trapezoidal highPriorityMF = new T1MF_Trapezoidal("MF for high priority", parametrosHighPriority);
         
-        T1_Consequent lowPriorityToReceiveVM = new T1_Consequent("LowPriority", lowPriorityMF, priority);
-        T1_Consequent normalPriorityToReceiveVM = new T1_Consequent("NormalPriority", normalPriorityMF, priority);
-        T1_Consequent highPriorityToReceiveVM = new T1_Consequent("HighPriority", highPriorityMF, priority);
+        T1_Consequent lowUsage = new T1_Consequent("LowPriority", lowPriorityMF, priority);
+        T1_Consequent normalUsage = new T1_Consequent("NormalPriority", normalPriorityMF, priority);
+        T1_Consequent highUsage = new T1_Consequent("HighPriority", highPriorityMF, priority);
 
         //Set up the rulebase and add rules
         rulebase = new T1_Rulebase(9);
-        rulebase.addRule(new T1_Rule(new T1_Antecedent[]{lowCpu, lowMem}, highPriorityToReceiveVM));
-        rulebase.addRule(new T1_Rule(new T1_Antecedent[]{lowCpu, reasonableMem}, lowPriorityToReceiveVM));
-        rulebase.addRule(new T1_Rule(new T1_Antecedent[]{lowCpu, highMem}, lowPriorityToReceiveVM));
-        rulebase.addRule(new T1_Rule(new T1_Antecedent[]{reasonableCpu, lowMem}, highPriorityToReceiveVM));
-        rulebase.addRule(new T1_Rule(new T1_Antecedent[]{reasonableCpu, reasonableMem}, normalPriorityToReceiveVM));
-        rulebase.addRule(new T1_Rule(new T1_Antecedent[]{reasonableCpu, highMem}, lowPriorityToReceiveVM));
-        rulebase.addRule(new T1_Rule(new T1_Antecedent[]{highCpu, lowMem}, highPriorityToReceiveVM));
-        rulebase.addRule(new T1_Rule(new T1_Antecedent[]{highCpu, reasonableMem}, normalPriorityToReceiveVM));
-        rulebase.addRule(new T1_Rule(new T1_Antecedent[]{highCpu, highMem}, lowPriorityToReceiveVM));
+        rulebase.addRule(new T1_Rule(new T1_Antecedent[]{lowCpu, lowMem}, lowUsage));
+        rulebase.addRule(new T1_Rule(new T1_Antecedent[]{lowCpu, reasonableMem}, normalUsage));
+        rulebase.addRule(new T1_Rule(new T1_Antecedent[]{lowCpu, highMem}, highUsage));
+        rulebase.addRule(new T1_Rule(new T1_Antecedent[]{reasonableCpu, lowMem}, normalUsage));
+        rulebase.addRule(new T1_Rule(new T1_Antecedent[]{reasonableCpu, reasonableMem}, normalUsage));
+        rulebase.addRule(new T1_Rule(new T1_Antecedent[]{reasonableCpu, highMem}, highUsage));
+        rulebase.addRule(new T1_Rule(new T1_Antecedent[]{highCpu, lowMem}, highUsage));
+        rulebase.addRule(new T1_Rule(new T1_Antecedent[]{highCpu, reasonableMem}, highUsage));
+        rulebase.addRule(new T1_Rule(new T1_Antecedent[]{highCpu, highMem}, highUsage));
         
         //just an example of setting the discretisation level of an output - the usual level is 100
         priority.setDiscretisationLevel(100);        
@@ -195,7 +195,14 @@ public class SimpleT1FLS
     }
 
 	public static void main(String args[]) {
-		new SimpleT1FLS();
+		SimpleT1FLS myFLS = new SimpleT1FLS();
+		
+		
+		for(float i = 0; i <= 10; i = (float) (i + 0.5)) {
+			for(float j = 0; j <= 10; j = (float) (j + 0.5))
+				System.out.println("Processador em: " + i + "Memoria em: " + j + "Valor Fuzzy: " + myFLS.getPriority(i, j));
+		}
+		
 	}
 	
 }

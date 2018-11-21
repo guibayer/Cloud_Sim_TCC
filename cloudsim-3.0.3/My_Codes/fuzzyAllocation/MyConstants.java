@@ -1,7 +1,6 @@
 package fuzzyAllocation;
 
 import org.cloudbus.cloudsim.power.models.PowerModel;
-import org.cloudbus.cloudsim.power.models.PowerModelSpecPowerHpProLiantMl110G4Xeon3040;
 import org.cloudbus.cloudsim.power.models.PowerModelSpecPowerHpProLiantMl110G5Xeon3075;
 
 /**
@@ -16,6 +15,7 @@ import org.cloudbus.cloudsim.power.models.PowerModelSpecPowerHpProLiantMl110G5Xe
  * @author Anton Beloglazov
  * @since Jan 6, 2012
  */
+
 public class MyConstants {
 
 	public final static boolean ENABLE_OUTPUT = true;
@@ -48,18 +48,40 @@ public class MyConstants {
 	 * Host types:
 	 *   HP ProLiant ML110 G4 (1 x [Xeon 3040 1860 MHz, 2 cores], 4GB)
 	 *   HP ProLiant ML110 G5 (1 x [Xeon 3075 2660 MHz, 2 cores], 4GB)
+	 *   
+	 *   
 	 *   We increase the memory size to enable over-subscription (x4)
+	 *   Cálculos baseados na ProLiant ML110 G4 - 2 PE - cada 1860 MIPS
+	 *   link: https://www.spec.org/power_ssj2008/results/res2011q1/power_ssj2008-20110124-00338.html
+	 *   Máquina nova: Hewlett Packard Enterprise ProLiant DL325 Gen10(AMD EPYC 7551P 2.0 GHz)
+	 *   RAM: 131072MB
+	 *   link:https://www.spec.org/power_ssj2008/results/res2018q3/power_ssj2008-20180619-00821.html
+	 *   3720 MIPS - 54.479     ssj_ops
+	 *   x		   - 2.212.736 ssj_ops
+	 *   x = 151092 MIPS/32 cores = 4721 MIPS por Core
+	 *   
+	 *   
+	 *   Cálculos baseados na ProLiant ML110 G4 - 2 PE - cada 1860 MIPS
+	 *   link: https://www.spec.org/power_ssj2008/results/res2011q1/power_ssj2008-20110124-00338.html
+	 *   Máquina nova: Hewlett Packard Enterprise ProLiant DL385 Gen10(AMD EPYC 7601 2.20 GHz)
+	 *   RAM: 131072MB
+	 *   link:https://www.spec.org/power_ssj2008/results/res2018q3/power_ssj2008-20180619-00821.html
+	 *   3720 MIPS - 54.479     ssj_ops
+	 *   x		   - 4.283.406 ssj_ops
+	 *   x = 292484 MIPS/64 cores = 4570 MIPS por Core
+	 *   
+	 *   
 	 */
 	public final static int HOST_TYPES	 = 2;
-	public final static int[] HOST_MIPS	 = { 1860, 2660 };
-	public final static int[] HOST_PES	 = { 2, 2 };
-	public final static int[] HOST_RAM	 = { 4096, 4096 };
+	public final static int[] HOST_MIPS	 = { 4721, 4570};
+	public final static int[] HOST_PES	 = { 32, 64 };
+	public final static int[] HOST_RAM	 = { 131072, 131072 }; 
 	public final static int HOST_BW		 = 1000000; // 1 Gbit/s
 	public final static int HOST_STORAGE = 1000000; // 1 TB
 
 	public final static PowerModel[] HOST_POWER = {
-		new PowerModelSpecPowerHpProLiantMl110G4Xeon3040(),
-		new PowerModelSpecPowerHpProLiantMl110G5Xeon3075()
+		new PowerModelSpecPowerHewlettPackardEnterpriseProLiantDL325(),
+		new PowerModelSpecPowerHewlettPackardEnterpriseProLiantDL385()
 	};
 
 }
