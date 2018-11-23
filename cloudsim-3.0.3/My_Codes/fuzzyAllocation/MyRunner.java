@@ -5,7 +5,7 @@ import java.io.IOException;
 
 public class MyRunner {
 	public static void main(String[] args) throws IOException {
-		boolean enableOutput = true;
+		boolean enableOutput = false;
 		boolean outputToFile = true;
 		String inputFolder = MyNonPowerAware.class.getClassLoader().getResource("workload/planetlab").getPath();
 		String outputFolder = "output1007";

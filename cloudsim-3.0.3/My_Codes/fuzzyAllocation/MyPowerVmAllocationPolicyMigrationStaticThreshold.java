@@ -36,7 +36,6 @@ public class MyPowerVmAllocationPolicyMigrationStaticThreshold extends PowerVmAl
 
 	/** The utilization threshold. */
 	private double utilizationThreshold = 9;
-	//private SimpleT1FLS fuzzyValue;
 
 	/**
 	 * Instantiates a new power vm allocation policy migration mad.
@@ -51,7 +50,6 @@ public class MyPowerVmAllocationPolicyMigrationStaticThreshold extends PowerVmAl
 			double utilizationThreshold) {
 		super(hostList, vmSelectionPolicy);
 		setUtilizationThreshold(utilizationThreshold);
-		//fuzzyValue = new SimpleT1FLS();
 	}
 
 	/**
@@ -64,20 +62,11 @@ public class MyPowerVmAllocationPolicyMigrationStaticThreshold extends PowerVmAl
 	protected boolean isHostOverUtilized(PowerHost host) {
 		addHistoryEntry(host, getUtilizationThreshold());
 		double totalRequestedMips = 0;
-		double totalRequestedMemory = 0;
 		for (Vm vm : host.getVmList()) {
 			totalRequestedMips += vm.getCurrentRequestedTotalMips();
-			totalRequestedMemory += vm.getCurrentRequestedRam();
 		}
-		double cpuUtilization = totalRequestedMips / host.getTotalMips();
-		//cpuUtilization = cpuUtilization * 10;
-		double memoryUtilization = totalRequestedMemory / host.getRam();
-		memoryUtilization = memoryUtilization * 10;
-		//double utilizationFuzzy = fuzzyValue.getPriority(cpuUtilization, memoryUtilization);
-		//System.out.println("Parametro de Cpu:" + cpuUtilization + " Parametro de Memoria: " + memoryUtilization);
-		//double media = (cpuUtilization + memoryUtilization) / 2;
-		//System.out.println("Host ID:" + host.getId() + "CPU: " + cpuUtilization + "MEM: " + memoryUtilization +"MÉDIA: " + media + "Fuzzy: " + utilizationFuzzy);
-		return cpuUtilization > getUtilizationThreshold();
+		double utilization = totalRequestedMips / host.getTotalMips();
+		return utilization > getUtilizationThreshold();
 	}
 	
 	

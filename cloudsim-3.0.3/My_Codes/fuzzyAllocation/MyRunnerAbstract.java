@@ -12,8 +12,16 @@ import org.cloudbus.cloudsim.Log;
 import org.cloudbus.cloudsim.Vm;
 import org.cloudbus.cloudsim.VmAllocationPolicy;
 import org.cloudbus.cloudsim.core.CloudSim;
+import org.cloudbus.cloudsim.examples.power.Constants;
 import org.cloudbus.cloudsim.power.PowerDatacenter;
 import org.cloudbus.cloudsim.power.PowerHost;
+import org.cloudbus.cloudsim.power.PowerVmAllocationPolicyMigrationAbstract;
+import org.cloudbus.cloudsim.power.PowerVmAllocationPolicyMigrationInterQuartileRange;
+import org.cloudbus.cloudsim.power.PowerVmAllocationPolicyMigrationLocalRegression;
+import org.cloudbus.cloudsim.power.PowerVmAllocationPolicyMigrationLocalRegressionRobust;
+import org.cloudbus.cloudsim.power.PowerVmAllocationPolicyMigrationMedianAbsoluteDeviation;
+import org.cloudbus.cloudsim.power.PowerVmAllocationPolicyMigrationStaticThreshold;
+import org.cloudbus.cloudsim.power.PowerVmAllocationPolicySimple;
 import org.cloudbus.cloudsim.power.PowerVmSelectionPolicy;
 import org.cloudbus.cloudsim.power.PowerVmSelectionPolicyMaximumCorrelation;
 import org.cloudbus.cloudsim.power.PowerVmSelectionPolicyMinimumMigrationTime;
@@ -212,12 +220,63 @@ public abstract class MyRunnerAbstract {
 		if (!parameterName.isEmpty()) {
 			parameter = Double.valueOf(parameterName);
 		}
-		if (vmAllocationPolicyName.equals("thr")) {
-			vmAllocationPolicy = new MyPowerVmAllocationPolicyMigrationStaticThreshold(
+		
+		if (vmAllocationPolicyName.equals("iqr")) {
+			PowerVmAllocationPolicyMigrationAbstract fallbackVmSelectionPolicy = new PowerVmAllocationPolicyMigrationStaticThreshold(
+					hostList,
+					vmSelectionPolicy,
+					0.7);
+			vmAllocationPolicy = new PowerVmAllocationPolicyMigrationInterQuartileRange(
+					hostList,
+					vmSelectionPolicy,
+					parameter,
+					fallbackVmSelectionPolicy);
+		} else if (vmAllocationPolicyName.equals("mad")) {
+			PowerVmAllocationPolicyMigrationAbstract fallbackVmSelectionPolicy = new PowerVmAllocationPolicyMigrationStaticThreshold(
+					hostList,
+					vmSelectionPolicy,
+					0.7);
+			vmAllocationPolicy = new PowerVmAllocationPolicyMigrationMedianAbsoluteDeviation(
+					hostList,
+					vmSelectionPolicy,
+					parameter,
+					fallbackVmSelectionPolicy);
+		} else if (vmAllocationPolicyName.equals("lr")) {
+			PowerVmAllocationPolicyMigrationAbstract fallbackVmSelectionPolicy = new PowerVmAllocationPolicyMigrationStaticThreshold(
+					hostList,
+					vmSelectionPolicy,
+					0.7);
+			vmAllocationPolicy = new PowerVmAllocationPolicyMigrationLocalRegression(
+					hostList,
+					vmSelectionPolicy,
+					parameter,
+					Constants.SCHEDULING_INTERVAL,
+					fallbackVmSelectionPolicy);
+		} else if (vmAllocationPolicyName.equals("lrr")) {
+			PowerVmAllocationPolicyMigrationAbstract fallbackVmSelectionPolicy = new PowerVmAllocationPolicyMigrationStaticThreshold(
+					hostList,
+					vmSelectionPolicy,
+					0.7);
+			vmAllocationPolicy = new PowerVmAllocationPolicyMigrationLocalRegressionRobust(
+					hostList,
+					vmSelectionPolicy,
+					parameter,
+					Constants.SCHEDULING_INTERVAL,
+					fallbackVmSelectionPolicy);
+		} else if (vmAllocationPolicyName.equals("thr")) {
+			vmAllocationPolicy = new PowerVmAllocationPolicyMigrationStaticThreshold(
 					hostList,
 					vmSelectionPolicy,
 					parameter);
-		}  else {
+		} else if (vmAllocationPolicyName.equals("dvfs")) {
+			vmAllocationPolicy = new PowerVmAllocationPolicySimple(hostList);
+		}
+		else if(vmAllocationPolicyName.equals("fuzzy")){
+			vmAllocationPolicy = new MyPowerVmAllocationPolicyFuzzy(
+					hostList,
+					vmSelectionPolicy,
+					parameter);
+		}else {
 			System.out.println("Unknown VM allocation policy: " + vmAllocationPolicyName);
 			System.exit(0);
 		}

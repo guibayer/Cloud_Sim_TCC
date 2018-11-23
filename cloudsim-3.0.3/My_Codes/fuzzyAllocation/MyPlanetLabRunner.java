@@ -37,7 +37,9 @@ public class MyPlanetLabRunner extends MyRunnerAbstract{
 
 			cloudletList = MyPlanetLabHelper.createCloudletListPlanetLab(brokerId, inputFolder);
 			vmList = MyHelper.createVmList(brokerId, cloudletList.size());
+			System.out.println("Quantidade de VMs: " + vmList.size() + " e Cloudlets: " + cloudletList.size());
 			hostList = MyHelper.createHostList(MyPlanetLabConstants.NUMBER_OF_HOSTS);
+			System.out.println("Tenho " + hostList.size() + " Hosts");
 		} catch (Exception e) {
 			e.printStackTrace();
 			Log.printLine("The simulation has been terminated due to an unexpected error");

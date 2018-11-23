@@ -45,12 +45,7 @@ public class MyConstants {
 	public final static int VM_SIZE		= 2500; // 2.5 GB
 
 	/*
-	 * Host types:
-	 *   HP ProLiant ML110 G4 (1 x [Xeon 3040 1860 MHz, 2 cores], 4GB)
-	 *   HP ProLiant ML110 G5 (1 x [Xeon 3075 2660 MHz, 2 cores], 4GB)
-	 *   
-	 *   
-	 *   We increase the memory size to enable over-subscription (x4)
+	 * 	HOST TYPES:
 	 *   Cálculos baseados na ProLiant ML110 G4 - 2 PE - cada 1860 MIPS
 	 *   link: https://www.spec.org/power_ssj2008/results/res2011q1/power_ssj2008-20110124-00338.html
 	 *   Máquina nova: Hewlett Packard Enterprise ProLiant DL325 Gen10(AMD EPYC 7551P 2.0 GHz)
@@ -76,8 +71,8 @@ public class MyConstants {
 	public final static int[] HOST_MIPS	 = { 4721, 4570};
 	public final static int[] HOST_PES	 = { 32, 64 };
 	public final static int[] HOST_RAM	 = { 131072, 131072 }; 
-	public final static int HOST_BW		 = 1000000; // 1 Gbit/s
-	public final static int HOST_STORAGE = 1000000; // 1 TB
+	public final static int HOST_BW		 = 5000000; // 5 Gbit/s
+	public final static int HOST_STORAGE = 10000000; // 10 TB
 
 	public final static PowerModel[] HOST_POWER = {
 		new PowerModelSpecPowerHewlettPackardEnterpriseProLiantDL325(),
