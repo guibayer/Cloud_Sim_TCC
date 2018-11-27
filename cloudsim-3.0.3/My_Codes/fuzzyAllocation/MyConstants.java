@@ -28,7 +28,13 @@ public class MyConstants {
 	public final static int CLOUDLET_PES	= 1;
 
 	/*
-	 * VM instance types:
+	 * Instance types based on aws values: https://aws.amazon.com/pt/ec2/instance-types/
+	 * SPEC values based on link: https://www.spec.org/power_ssj2008/results/res2017q3/power_ssj2008-20170829-00780.html 
+	 * MIPS VALUE FOR Intel Xeon Platinum 8180 2.50 GHz
+	 * 3720 MIPS - 54.479     ssj_ops - Base values as used on Hosts definition
+	 * x         - 5,727,798  ssj_ops
+	 * x = 391112 MIPS / 56 cores = 6170 MIPS per vCPU
+	 * Old VM instance types:
 	 *   High-Memory Extra Large Instance: 3.25 EC2 Compute Units, 8.55 GB // too much MIPS
 	 *   High-CPU Medium Instance: 2.5 EC2 Compute Units, 0.85 GB
 	 *   Extra Large Instance: 2 EC2 Compute Units, 3.75 GB
@@ -36,11 +42,22 @@ public class MyConstants {
 	 *   Micro Instance: 0.5 EC2 Compute Unit, 0.633 GB
 	 *   We decrease the memory size two times to enable oversubscription
 	 *
+	 * New Vm instance types:
+	 *  INSTANCES TAKEN ON M4 TAB BECAUSE THEY USE A PROCESSOR THAT HAVE A SIMILAR IN SPEC BENCHMARK
+	 * 	 High-Memory Extra Large Instance
+	 * 	 High-Cpu Medium Instance
+	 *   Large Instance
+	 *   Extra Large Instance
+	 *   NAME   | VCpu | Mem |
+	 * c5.xlarge|  2   |  32 | - Mem - original is 4VCpu but use 2 instead(too much cpu)
+	 * c5.xlarge|  4   |  8  | - CPU 
+	 * m4.large |  2   |  8  | - Normal
+	 * m4.xlarge|  4   |  16 | - Normal
 	 */
 	public final static int VM_TYPES	= 4;
-	public final static int[] VM_MIPS	= { 2500, 2000, 1000, 500 };
-	public final static int[] VM_PES	= { 1, 1, 1, 1 };
-	public final static int[] VM_RAM	= { 870,  1740, 1740, 613 };
+	public final static int[] VM_MIPS	= { 4000, 3000, 2000, 2000 };
+	public final static int[] VM_PES	= { 1, 2, 1, 2 };
+	public final static int[] VM_RAM	= { 32768,  8192, 8192, 16384};
 	public final static int VM_BW		= 100000; // 100 Mbit/s
 	public final static int VM_SIZE		= 2500; // 2.5 GB
 
